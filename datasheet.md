@@ -16,7 +16,9 @@ The dataset consists of:
 - Corresponding scalar outputs returned by the evaluation system  
 - Eight independent optimisation problems  
 - Input dimensionality ranging from 2D to 8D  
-- Approximately ten sequential rounds per function  
+- Approximately ten sequential rounds per function
+- Across ten rounds, the dataset contains approximately 80 total query–evaluation pairs (eight functions evaluated sequentially).
+- Each of the eight functions is treated as an independent optimisation task with its own query history. 
 
 ### Format
 
