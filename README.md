@@ -1,144 +1,113 @@
 # Black-Box Optimisation (BBO) Capstone Project
 
-## Project Overview
+---
+## 📌 Project Overview
 
-This repository contains my work on the **Black-Box Optimisation (BBO) Capstone Project**, where the objective is to optimise **eight unknown functions** under strict query constraints. Each function can only be accessed through input–output evaluations, and no information is available about the underlying functional form, gradients, or noise structure.
+This repository contains my work for the Imperial College London Black-Box Optimisation (BBO) Capstone Project. The goal of the project is to optimise eight unknown objective functions under a strict query budget using principled sequential decision-making.
 
-The goal of the project is to identify high-performing input configurations using as few queries as possible. This setting closely mirrors real-world machine learning and optimisation problems such as **hyperparameter tuning, experimental design, and system optimisation**, where evaluations are expensive and full system knowledge is unavailable.
+Across ten optimisation rounds, I progressively refined a Bayesian optimisation strategy, balancing exploration and exploitation while analysing uncertainty, scaling effects and late-stage convergence behaviour.
 
-From a professional perspective, this project strengthens key data science skills such as **decision-making under uncertainty, iterative experimentation, and clear communication of technical strategies**, all of which are essential in applied machine learning and analytics roles.
+---
 
+## 🎯 Objectives
 
+- Optimise eight hidden black-box functions  
+- Apply Gaussian Process–based Bayesian Optimisation  
+- Operate effectively under limited query budgets  
+- Analyse diminishing returns and uncertainty patterns  
+- Maintain transparency and reproducibility  
 
-## Inputs and Outputs
+---
 
-### Inputs
+## 🧠 Optimisation Strategy
 
-* Each function accepts an input vector with dimensionality ranging from **2 to 8**
-* All input values are constrained to the range **[0, 1]**
-* Queries must be submitted in the following format:
+The optimisation pipeline follows a **sequential Bayesian optimisation framework** using Gaussian Process (GP) surrogates.
 
-```
-x1-x2-x3-...-xn
-```
+### Early Rounds (1–3)
+- Broad exploration of the search space  
+- Larger step sizes  
+- High uncertainty weighting  
 
-where each value:
+### Middle Rounds (4–7)
+- Balanced exploration–exploitation  
+- Increased reliance on surrogate predictions  
+- Identification of promising regions  
 
-* starts with `0`
-* is specified to **six decimal places**
+### Late Rounds (8–10)
+- Precision-oriented local refinement  
+- Smaller, dimension-aware perturbations  
+- Controlled exploitation with residual exploration  
 
-**Example (4D input):**
+Query selection was guided by the GP posterior mean and uncertainty to manage the exploration–exploitation trade-off.
 
-```
-0.156433-0.285223-0.752660-0.225294
-```
+---
 
-### Outputs
+## 📊 Key Observations
 
-* Each query returns a **single scalar value**
-* The output represents the function’s performance at the queried point
-* No gradients, uncertainty estimates, or structural information are provided
+- Faster convergence in low-dimensional functions  
+- Slower improvement in higher dimensions (6D–8D)  
+- Evidence of diminishing returns after ~15–18 samples  
+- Increasing sensitivity to early sampling decisions  
+- Trade-off between robustness and aggressive exploitation  
 
+---
 
+## 📄 Documentation
 
-## Challenge Objectives
+To support transparency and reproducibility:
 
-The objective of the BBO capstone project is to maximise the output of each of the eight unknown functions under the following constraints:
+- 📑 [Dataset Datasheet](datasheet.md)  
+- 📘 [Model Card](model_card.md)
 
-* A limited query budget per function
-* Unknown and potentially non-linear response surfaces
-* No access to gradients or analytical structure
-* Delayed feedback between query submission and receiving results
+These documents describe the dataset construction, optimisation assumptions, limitations and intended use.
 
-Given these constraints, each query must be selected carefully, balancing **information gain** with **performance improvement**.
+---
 
+## 📂 Repository Structure
 
-
-## Strategy Evolution Across Weeks 1–3
-
-This section summarises how my optimisation strategy evolved across the first three weekly query submissions.
-
-### Week 1 – Initial Exploration
-
-The first round focused on broad exploration. Queries were selected to sample different regions of the input space to understand general behaviour and scale without making strong assumptions.
-
-### Week 2 – Identifying Promising Regions
-
-With additional outputs available, the second round focused on identifying promising regions. Queries were refined toward higher-performing areas while maintaining some exploration to reduce uncertainty.
-
-### Week 3 – Focused Refinement with SVM-Inspired Reasoning
-
-By the third round, the strategy became more selective. Exploitation of high-performing regions was prioritised using small perturbations, while unstable functions continued to receive exploratory queries.
-
-At this stage, the reasoning was influenced by **classification-style thinking inspired by Support Vector Machines (SVMs)**. Instead of predicting exact function values, the input space was viewed as regions of **high vs low performance**. Although SVMs were not implemented directly, this conceptual framework informed exploration–exploitation decisions.
+├── datasheet.md
+├── model_card.md
+├── README.md
+└── (other project files)
 
 
+---
 
-## Exploration vs Exploitation
+## ⚠️ Limitations
 
-Given the limited query budget, the strategy balances:
+- Limited query budget constrains global exploration  
+- Gaussian Process assumes local smoothness  
+- Sparse coverage in high-dimensional spaces  
+- Possible sensitivity to early observations  
+- Narrow global optima may remain undiscovered  
 
-* **Exploitation:** refining inputs near known high-performing regions
-* **Exploration:** sampling new regions for uncertain or poorly performing functions
+---
 
-This balance is adjusted **per function** depending on observed stability and behaviour across rounds.
+## 🔍 Transparency Note
 
+All optimisation decisions were made using a Gaussian Process–based Bayesian optimisation framework. The accompanying datasheet and model card document the assumptions, data characteristics and decision logic to support interpretability and reproducibility.
 
+---
 
-## Repository Organisation and Reproducibility
+## 🔬 Reproducibility
 
-As the project progressed, the repository structure was reviewed and refined to improve clarity, navigability, and reproducibility.
+The optimisation process can be reproduced given access to:
 
-```
-.
-├── data/        # Input–output pairs from each optimisation round
-├── queries/     # Submitted query points per iteration
-├── results/     # Returned outputs and performance summaries
-├── notebooks/   # Exploratory analysis and visualisation
-├── models/      # Surrogate models and optimisation logic
-├── docs/        # Reflections, methodology notes, and explanations
-├── requirements.txt
-└── README.md
-```
+- Query history  
+- Function evaluations  
+- GP surrogate configuration  
+- Acquisition strategy parameters  
 
-This structure separates concerns clearly and allows optimisation decisions to be traced across iterations.
+See the model card for full methodological details.
 
+---
 
+## 📚 Course Context
 
-## Tools and Libraries
+This project was completed as part of the **Imperial College London Machine Learning/AI programme**, focusing on practical black-box optimisation under uncertainty and constrained evaluation budgets.
 
-The project primarily uses:
+---
 
-* **NumPy** and **Pandas** for numerical computation and data handling
-* **scikit-learn** for lightweight surrogate modelling and exploratory analysis
-* **Matplotlib / Seaborn** for visualisation
+## 🤝 Feedback
 
-While deep learning frameworks such as **PyTorch** were explored conceptually during the module, they were not heavily integrated into the main workflow due to limited data availability and the emphasis on strategic optimisation rather than model capacity. This reflects a deliberate trade-off between **flexibility and simplicity**.
-
-
-
-## Documentation and Reflections
-
-This README is treated as a **living document** and has been updated iteratively to reflect:
-
-* The evolution of optimisation strategy across rounds
-* The reasoning behind exploration–exploitation decisions
-* Observed limitations and assumptions
-
-Clear documentation ensures the project communicates not only *what* was done, but *why* decisions were made—an essential requirement for professional machine learning work.
-
-
-## Limitations and Future Directions
-
-As more data becomes available, several limitations become apparent:
-
-* Heuristic reasoning becomes less effective in higher-dimensional spaces
-* Interactions between dimensions are difficult to identify manually
-* Some dimensions may be less influential and require formal modelling
-
-Future extensions may include:
-
-* Lightweight surrogate models (classification or regression-based)
-* Feature relevance analysis
-* More formal Bayesian optimisation strategies
-
+Feedback and suggestions are welcome.
