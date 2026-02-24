@@ -40,6 +40,8 @@ The optimisation pipeline follows a **sequential Bayesian optimisation framework
 
 Query selection was guided by the GP posterior mean and uncertainty to manage the exploration–exploitation trade-off.
 
+In later rounds, the search process increasingly reflected Bayesian optimisation principles, using surrogate-based reasoning to guide uncertainty-aware query selection.
+
 ---
 
 ## 📊 Key Observations
@@ -96,7 +98,8 @@ The optimisation process can be reproduced given access to:
 - Query history  
 - Function evaluations  
 - GP surrogate configuration  
-- Acquisition strategy parameters  
+- Acquisition strategy parameters
+- All query decisions are logged sequentially, enabling the optimisation trajectory to be reconstructed and audited.
 
 See the model card for full methodological details.
 
