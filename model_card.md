@@ -75,7 +75,8 @@ Performance was evaluated independently across the eight functions.
 
 ### Primary Metric
 
-- Best objective value achieved per function over time  
+- Best objective value achieved per function over time
+- Performance was tracked using the best observed objective value per function across optimisation rounds.
 
 ---
 
@@ -105,6 +106,12 @@ Important constraints include:
 Performance may degrade if the true function violates smoothness assumptions.
 
 ---
+## Strengths
+
+- Sample-efficient under tight query budgets  
+- Naturally uncertainty-aware  
+- Interpretable sequential decision process  
+- Effective in low- to moderate-dimensional settings
 
 ## Ethical and Transparency Considerations
 
@@ -113,7 +120,8 @@ Transparency is supported through:
 - Full query history  
 - Dataset datasheet  
 - Explicit documentation of assumptions  
-- Clear reporting of limitations  
+- Clear reporting of limitations
+- The sequential nature of the optimisation process makes individual query decisions traceable, allowing the search trajectory to be audited and interpreted retrospectively.
 
 Providing this model card helps prevent over-generalisation of results and supports responsible adaptation of Bayesian optimisation methods in real-world contexts.
 
@@ -131,3 +139,4 @@ The optimisation workflow can be reproduced given:
 Additional low-level hyperparameter logs would further improve exact reproducibility but are not required for conceptual replication.
 
 ---
+Version: v1.0 (Round-10 Strategy)
