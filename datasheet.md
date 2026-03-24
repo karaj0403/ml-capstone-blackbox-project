@@ -1,106 +1,70 @@
-# Dataset Datasheet — BBO Capstone Project
+# Datasheet
 
-## Motivation
+## Function Overview
 
-This dataset was created to support the Black-Box Optimisation (BBO) capstone project. The primary objective is to optimise eight unknown functions using a limited query budget while operating under complete structural uncertainty.
+This datasheet describes the optimisation of multiple black-box functions (Function 1–8).
 
-The dataset captures the sequential history of query submissions and corresponding function evaluations. It enables analysis of optimisation behaviour, exploration–exploitation trade-offs and surrogate model effectiveness in a constrained black-box setting.
-
----
-
-## Composition
-
-The dataset consists of:
-
-- Query vectors submitted across multiple optimisation rounds  
-- Corresponding scalar outputs returned by the evaluation system  
-- Eight independent optimisation problems  
-- Input dimensionality ranging from 2D to 8D  
-- Approximately ten sequential rounds per function
-- Across ten rounds, the dataset contains approximately 80 total query–evaluation pairs (eight functions evaluated sequentially).
-- Each of the eight functions is treated as an independent optimisation task with its own query history. 
-
-### Format
-
-- Continuous numeric inputs in the range [0, 1]  
-- Tabular structure (CSV-style logical organisation)  
-- One record per query  
-
-### Known Gaps and Characteristics
-
-- Sparse coverage in higher-dimensional spaces  
-- Increasing concentration near locally promising regions  
-- Limited total evaluations per function  
-- Uneven sampling density across the search space  
-
-These characteristics reflect the strict query budget imposed by the capstone setting.
+- Each function represents a simulated real-world optimisation scenario  
+- Input dimensions range from 2D to 8D  
+- Output represents a performance score  
 
 ---
 
-## Collection Process
+## Nature of the Data
 
-Queries were generated sequentially using an uncertainty-aware optimisation strategy informed by Bayesian optimisation principles.
-
-### Strategy Evolution
-
-- Early rounds prioritised broad exploration  
-- Middle rounds balanced exploration and exploitation  
-- Later rounds focused on precision-oriented refinement  
-
-Each new query was selected using the full history of prior observations.
-
-### Time Frame
-
-The dataset was accumulated progressively across ten optimisation rounds during the BBO capstone project.
+- Data consists of sequentially generated query points  
+- Dataset grows with each iteration  
+- No external noise assumptions explicitly modelled  
+- Functions show varying behaviour:
+  - some smooth  
+  - some multi-modal  
+  - some difficult to explore  
 
 ---
 
-## Preprocessing and Intended Uses
+## Optimisation Strategy
 
-### Preprocessing
+- Pattern-based optimisation approach  
+- Identification of promising regions (clusters)  
+- Gradual refinement using smaller step sizes  
+- Balance between exploration and exploitation  
 
-- No additional feature scaling required (inputs already bounded)  
-- No label transformations applied  
-- Data used directly for surrogate modelling  
-
-### Intended Uses
-
-This dataset is suitable for:
-
-- Studying black-box optimisation behaviour  
-- Evaluating Bayesian optimisation workflows  
-- Analysing sequential decision-making under uncertainty  
-- Educational demonstration of constrained optimisation  
-
-### Inappropriate Uses
-
-This dataset should **not** be used for:
-
-- Supervised learning benchmarks  
-- Claims of general optimisation superiority  
-- Real-world system modelling without context  
-- Safety-critical deployment scenarios  
+Strategy evolved from:
+- broad exploration → structured refinement  
 
 ---
 
-## Distribution and Maintenance
+## Data Handling
 
-### Availability
-
-The dataset is available in this public GitHub repository as part of the BBO capstone project.
-
-### Terms of Use
-
-- Educational and research use only  
-- No guarantees of real-world representativeness  
-
-### Maintenance
-
-Maintained by **Manoj Kumar**.  
-Future updates may occur if additional optimisation rounds are performed.
+- No explicit scaling required (values already in [0,1])  
+- No surrogate models used  
+- Outliers were treated as informative signals  
 
 ---
 
-## Transparency Statement
+## Weekly Learning
 
-This datasheet is provided to improve reproducibility, interpretability and responsible reuse of the optimisation results. Known limitations and sampling biases are documented to prevent over-interpretation of performance.
+- Early rounds improved understanding of function landscape  
+- Later rounds focused on refinement  
+- diminishing returns observed  
+
+If restarted:
+- more adaptive exploration strategy  
+- earlier identification of key dimensions  
+
+---
+
+## Performance
+
+- Best results achieved through local refinement  
+- confidence moderate (possible local optima)  
+- results aligned with expected optimisation behaviour  
+
+---
+
+## Ethical & Practical Considerations
+
+- Reflects real-world optimisation under uncertainty  
+- limited data is a key constraint  
+- strategy is scalable but may require automation for larger systems  
+- risk of missing global optima due to limited exploration  
